@@ -3,9 +3,8 @@ import * as S from "./styles";
 import { Repository } from "../../store/types";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSaveLocalStorage } from "../../hooks/useHome";
-import { selectRepos } from "../../store/selectors/reposSelectors";
 import { useSelector } from "react-redux";
 import {
   incrementCounter,
@@ -13,6 +12,7 @@ import {
 } from "../../store/actions/favoritesActions";
 import { useDispatch } from "react-redux";
 import { selectCounter } from "../../store/selectors/favoritesSelectors";
+import { SetRemoveRepos } from "../../store/actions/reposActions";
 
 export const Card = ({
   full_name,
@@ -24,6 +24,8 @@ export const Card = ({
   id,
 }: Repository) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const verifyScreen = route.name;
 
   const parts = full_name.split("/");
   const name = parts[0];
@@ -33,11 +35,12 @@ export const Card = ({
   const dispatch = useDispatch();
 
   const counter = useSelector((state) => state.counter);
-  const selectedState = useSelector(selectCounter);
   const handleSaveFavoritesRepos = () => {
-    dispatch(setCounter(counter.favorite.counter + 1));
-    // console.log("Counter", counter.favorite.counter);
+    // const reposObject = gitRepos.repos.repositories.find((obj) => obj.id === id);
+
     useSaveLocalStorage(id, gitRepos.repos.repositories);
+    dispatch(SetRemoveRepos(id, gitRepos.repos.repositories));
+    dispatch(setCounter(counter.favorite.counter + 1));
   };
 
   return (
@@ -62,10 +65,13 @@ export const Card = ({
       <S.Description numberOfLines={1}>{description}</S.Description>
 
       <S.Footer>
-        <S.Button onPress={handleSaveFavoritesRepos}>
-          <Entypo name="star" size={20} color="#ffd02c" />
-          <S.ButtonText>Favoritar</S.ButtonText>
-        </S.Button>
+        {verifyScreen === "Repositórios" && (
+          <S.Button onPress={handleSaveFavoritesRepos}>
+            <Entypo name="star" size={20} color="#ffd02c" />
+            <S.ButtonText>Favoritar</S.ButtonText>
+          </S.Button>
+        )}
+
         <S.Container>
           <Entypo name="star" size={20} color="#ffd02c" />
           <S.Text>{stargazers_count}</S.Text>

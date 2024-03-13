@@ -20,6 +20,7 @@ export enum ReposActionTypes {
   FETCH_REPOS_REQUEST = "FETCH_REPOS_REQUEST",
   FETCH_REPOS_SUCCESS = "FETCH_REPOS_SUCCESS",
   FETCH_REPOS_FAILURE = "FETCH_REPOS_FAILURE",
+  REMOVE_REPOS = "REMOVE_REPOS",
 }
 
 interface FetchReposRequestAction {
@@ -36,10 +37,16 @@ interface FetchReposFailureAction {
   payload: Error;
 }
 
+interface RemoveRepoAction {
+  type: ReposActionTypes.FETCH_REPOS_REQUEST;
+  payload: Repository[];
+}
+
 export type ReposAction =
   | FetchReposRequestAction
   | FetchReposSuccessAction
-  | FetchReposFailureAction;
+  | FetchReposFailureAction
+  | RemoveRepoAction;
 
 export enum IncrementalActionTypes {
   INCREMENT_COUNTER = "INCREMENT_COUNTER",
