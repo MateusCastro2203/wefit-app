@@ -18,6 +18,7 @@ export const fetchReposApi = async (userName: string) => {
 
     const mappedData: Repository[] = data.map((repo) => {
       const {
+        id,
         full_name,
         description,
         owner,
@@ -27,6 +28,7 @@ export const fetchReposApi = async (userName: string) => {
       } = repo;
 
       return {
+        id,
         full_name,
         description,
         owner: {

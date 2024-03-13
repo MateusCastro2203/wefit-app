@@ -14,15 +14,13 @@ export const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const loading = useSelector(selectLoading);
-  //   const error = useSelector(selectError);
 
   useEffect(() => {
     const usernameToFetch = "MateusCastro2203";
     dispatch(setRepos(usernameToFetch));
   }, [dispatch]);
 
-  const gitRepos = useSelector(selectRepos);
-  const repositories = gitRepos ? gitRepos.repositories : [];
+  const gitRepos = useSelector((state) => state.repos);
 
   return (
     <S.ScrollView
@@ -33,9 +31,10 @@ export const HomeScreen = () => {
       }}
     >
       <FlatList
-        data={repositories}
+        data={gitRepos.repos.repositories}
         renderItem={({ item }) => (
           <Card
+            id={item.id}
             full_name={item.full_name}
             owner={item.owner}
             description={item.description}

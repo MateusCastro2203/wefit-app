@@ -4,6 +4,16 @@ import { Repository } from "../../store/types";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useSaveLocalStorage } from "../../hooks/useHome";
+import { selectRepos } from "../../store/selectors/reposSelectors";
+import { useSelector } from "react-redux";
+import {
+  incrementCounter,
+  setCounter,
+} from "../../store/actions/favoritesActions";
+import { useDispatch } from "react-redux";
+import { selectCounter } from "../../store/selectors/favoritesSelectors";
+
 export const Card = ({
   full_name,
   description,
@@ -11,11 +21,25 @@ export const Card = ({
   owner,
   stargazers_count,
   html_url,
+  id,
 }: Repository) => {
   const navigation = useNavigation();
+
   const parts = full_name.split("/");
   const name = parts[0];
   const repo = parts[1];
+
+  const gitRepos = useSelector((state) => state.repos);
+  const dispatch = useDispatch();
+
+  const counter = useSelector((state) => state.counter);
+  const selectedState = useSelector(selectCounter);
+  const handleSaveFavoritesRepos = () => {
+    dispatch(setCounter(counter.favorite.counter + 1));
+    // console.log("Counter", counter.favorite.counter);
+    useSaveLocalStorage(id, gitRepos.repos.repositories);
+  };
+
   return (
     <S.Card
       onPress={() =>
@@ -38,7 +62,7 @@ export const Card = ({
       <S.Description numberOfLines={1}>{description}</S.Description>
 
       <S.Footer>
-        <S.Button>
+        <S.Button onPress={handleSaveFavoritesRepos}>
           <Entypo name="star" size={20} color="#ffd02c" />
           <S.ButtonText>Favoritar</S.ButtonText>
         </S.Button>

@@ -28,7 +28,6 @@ export const reposReducer = (
 
 export const RootState = combineReducers({
   repos: reposReducer,
-  // Outros reducers, se houver
 });
 
 export type RootState = {

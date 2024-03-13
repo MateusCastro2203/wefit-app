@@ -1,4 +1,5 @@
 export interface Repository {
+  id: number;
   full_name: string;
   description: string;
   owner: {
@@ -39,3 +40,12 @@ export type ReposAction =
   | FetchReposRequestAction
   | FetchReposSuccessAction
   | FetchReposFailureAction;
+
+export enum IncrementalActionTypes {
+  INCREMENT_COUNTER = "INCREMENT_COUNTER",
+}
+
+export interface IncrementalAction {
+  type: IncrementalActionTypes.INCREMENT_COUNTER;
+  payload: number;
+}
