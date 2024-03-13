@@ -1,5 +1,10 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { thunk } from "redux-thunk";
-import { reposReducer } from "./reducers/reposReducer";
+import { RootState } from "./reducers/reposReducer";
 
-export const store = createStore(reposReducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+  repos: RootState,
+  // Adicione outros reducers, se necessário
+});
+
+export const store = createStore(RootState, applyMiddleware(thunk));

@@ -16,14 +16,14 @@ export const fetchReposFailure = (error: Error): ReposAction => ({
   payload: error,
 });
 
-export const getRepos =
+export const setRepos =
   (username: string) => async (dispatch: Dispatch<ReposAction>) => {
     dispatch(reposRequest());
     try {
       const response = await fetchReposApi(username);
-      console.log("AA", response);
       dispatch(fetchReposSuccess(response));
     } catch (error) {
       dispatch(fetchReposFailure(error));
+      throw error;
     }
   };
