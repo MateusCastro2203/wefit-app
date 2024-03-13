@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectRepos,
-  selectError,
-  selectLoading,
-} from "../../store/selectors/reposSelectors";
+import { selectLoading } from "../../store/selectors/reposSelectors";
 import { FlatList, View } from "react-native";
 import { setRepos } from "../../store/actions/reposActions";
 import * as S from "./styles";

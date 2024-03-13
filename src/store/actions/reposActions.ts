@@ -41,7 +41,7 @@ export const SetRemoveRepos =
     for (let i = 0; i < reposObject.length; i++) {
       if (reposObject[i].id === id) {
         reposObject.splice(i, 1);
-        break; // Uma vez que o objeto é removido, não há necessidade de continuar o loop
+        break;
       }
     }
     dispatch(fetchReposSuccess(reposObject));

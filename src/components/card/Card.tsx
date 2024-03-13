@@ -36,8 +36,6 @@ export const Card = ({
 
   const counter = useSelector((state) => state.counter);
   const handleSaveFavoritesRepos = () => {
-    // const reposObject = gitRepos.repos.repositories.find((obj) => obj.id === id);
-
     useSaveLocalStorage(id, gitRepos.repos.repositories);
     dispatch(SetRemoveRepos(id, gitRepos.repos.repositories));
     dispatch(setCounter(counter.favorite.counter + 1));

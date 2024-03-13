@@ -6,7 +6,6 @@ export const incrementCounter = (count: number): IncrementalAction => ({
 });
 
 export const setCounter = (count: number) => (dispatch: Dispatch) => {
-  console.log("Fui Chamdo", count);
   const incrementalCounter = count + 1;
   dispatch(incrementCounter(incrementalCounter));
 };
